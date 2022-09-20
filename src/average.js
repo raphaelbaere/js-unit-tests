@@ -11,12 +11,21 @@
     - average([1, '2']) // Retorno: undefined;
 */
 
-const average = () => {};
-```javascript
-const average = () => {
-  // adicione seu código aqui
-}
+const average = (array) => {
+  let somaTotal = 0;
+  if (array.length < 1) {
+    return undefined;
+  }
+  for (let index = 0; index < array.length; index += 1) {
+    if (typeof array[index] !== 'number') {
+      return undefined;
+    }
+    somaTotal += array[index];
+  }
+  let media = Math.round(somaTotal / array.length);
+  return media;
+};
 
-module.exports = average
-```
+console.log(average([1, 2, 3, '4', 5]))
+
 module.exports = average;
