@@ -12,5 +12,11 @@
 */
 
 const average = () => {};
+```javascript
+const average = () => {
+  // adicione seu código aqui
+}
 
+module.exports = average
+```
 module.exports = average;
