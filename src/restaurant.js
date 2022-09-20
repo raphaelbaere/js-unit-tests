@@ -90,16 +90,22 @@ const createMenu = (objeto) => {
   let newObject = {
     fetchMenu: () => objeto,
     consumption: [],
-    order: (pedido) => {
-      const newOrder = (request) => {
-        createMenu().consumption.push(request);
-      };
-      newOrder(pedido);
-    }, 
-    };
+    order: (pedido) => newObject.consumption.push(pedido),
+    pay: () => {
+      const cardapio = newObject.fetchMenu();
+      let somaTotal = 0;
+      for (let i = 0; i <= newObject.consumption.length; i += 1) {
+        if (Object.prototype.hasOwnProperty.call(cardapio.food, newObject.consumption[i])) {
+          somaTotal += cardapio.food[newObject.consumption[i]];
+        }
+        if (Object.prototype.hasOwnProperty.call(cardapio.drink, newObject.consumption[i])) {
+          somaTotal += cardapio.drink[newObject.consumption[i]];
+        }
+      }
+      return somaTotal * 1.1;
+    },
+  };
   return newObject;
 };
-
-console.log(createMenu({ food: {}, drinks: {} }).order('coxinha'));
 
 module.exports = createMenu;

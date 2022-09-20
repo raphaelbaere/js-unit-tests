@@ -57,7 +57,8 @@ describe('10 - Implemente a função `createMenu`, bem como seus casos de teste'
     expect(createMenu()).toHaveProperty('fetchMenu');
   });
   it ('Verifica se o "objetoRetornado.fetchMenu()" retorna um objeto cujas chaves são somente food e drink', () => {
-    expect(Object.keys(createMenu({ food: {}, drink: {} }))).toBeEqual(['food', 'drink'])
+    const objetoRetornado = createMenu({ food: {}, drink: {} });
+    expect(Object.keys(objetoRetornado.fetchMenu())).toEqual(['food', 'drink'])
   });
   it ('Verifica se o menu passado pra função createMenu() é idêntico ao menu recuperado pela função "objetoRetornado.fetchmenu()"', () => {
     const obj = { food: {}, drink: {}};
@@ -67,38 +68,31 @@ describe('10 - Implemente a função `createMenu`, bem como seus casos de teste'
     expect(createMenu({ food: {}, drinks: {}}).consumption).toEqual([])
   });
   it ('Verifique se, ao chamar uma função associada à chave "order" no objeto retornado, passando uma string como parâmetro (como "objetoRetornado.order("coxinha")"), tal string é adicionada ao array retornado em "objetoRetornado.consumption"' , () => {
-    expect(createMenu({ food: {}, drinks: {}}).order('coxinha')).toEqual({ food: {}, drinks: {}, order: order(), consumption: 'coxinha'})
+    const objetoCriado = createMenu();
+    objetoCriado.order('coxinha');
+    expect(objetoCriado.consumption).toEqual(['coxinha'])
   });
-    // TESTE 6: Verifique se, ao adicionar três pedidos, dentre bebidas e comidas, o array `objetoRetornado.consumption` contém os itens pedidos.
-    // ```
-    // objetoRetornado.order("coxinha");
-    // objetoRetornado.order("agua");
-    // objetoRetornado.order("sopa");
-    // objetoRetornado.order("sashimi");
-    // objetoRetornado.consumption // Retorno: ["coxinha", "agua", "sopa", "sashimi"]
-    // ```
-
-    // Agora faça o TESTE 7 deste arquivo.
-    // --------------------------------------------------------------------------------------
-
-    // TESTE 7: Verifique se a função `order` aceita que pedidos repetidos sejam acrescidos a `consumption`.
-    // ```
-    // objetoRetornado.order('coxinha');
-    // objetoRetornado.order('agua');
-    // objetoRetornado.order('coxinha');
-    // objetoRetornado.consumption // Retorno: ['coxinha', 'agua', 'coxinha']
-    // ```
-
-    // Agora faça o TESTE 8 deste arquivo.
-    // --------------------------------------------------------------------------------------
-
-    // TESTE 8: Verifique se, ao chamar `objetoRetornado.pay()`, retorna-se a soma dos preços de tudo que foi pedido, conforme registrado em `objetoRetornado.consumption`
-    // ```
-    // objetoRetornado.order('coxinha');
-    // objetoRetornado.order('agua');
-    // objetoRetornado.order('coxinha');
-    // objetoRetornado.pay() // Retorno: somaDosPreçosDosPedidos
-    // ```
-  
-    // Agora faça o PASSO 4 no arquivo `src/restaurant.js`.
+  it ('Verifique se, ao adicionar três pedidos, dentre bebidas e comidas, o array "objetoRetornado.consumption" contém os itens pedidos.', () => {
+    const objetoRetornado = createMenu()
+    objetoRetornado.order("coxinha");
+    objetoRetornado.order("agua");
+    objetoRetornado.order("sopa");
+    objetoRetornado.order("sashimi");
+    expect(objetoRetornado.consumption).toEqual(['coxinha', 'agua', 'sopa', 'sashimi'])
+  })
+  it ('Verifique se a função "order" aceita que pedidos repetidos sejam acrescidos a consumption', () => {
+    const objetoRetornado = createMenu();
+    objetoRetornado.order('coxinha');
+    objetoRetornado.order('agua');
+    objetoRetornado.order('coxinha');
+    expect(objetoRetornado.consumption).toEqual(['coxinha', 'agua', 'coxinha'])
+  })
+  it ('Verifique se, ao chamar "objetoRetornado.pay()", retorna-se a soma dos preços de tudo que foi pedido, conforme registrado em "objetoRetornado.consumption"', () => {
+    const objetoRetornado = createMenu({ food: {'coxinha': 3.9, 'sopa': 9.9}, drink: {'agua': 3.9, 'cerveja': 6.9} })
+    objetoRetornado.order('coxinha');
+    objetoRetornado.order('sopa');
+    objetoRetornado.order('agua');
+    objetoRetornado.order('cerveja');
+    expect(objetoRetornado.pay()).toBeCloseTo(27.06)
+  })
 });
